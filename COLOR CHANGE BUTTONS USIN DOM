@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color</title>
+</head>
+<body>
+    <h1 class="color">Click the button to change the backgroundColor</h1>
+    <style>
+        h1{
+            display: inline-block;
+            flex: none;
+            color: black;
+            background-color: orange;
+        }
+        body{
+            text-align: center;
+            border: 20px;
+            border-radius: 20%;
+            padding: 30px;
+        }
+        button{
+            margin: 50px;
+            padding: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 30%;
+
+        }
+    </style>
+    <button id="b1" onclick="red()">Red</button>
+    <button id="b2" onclick="blue()">Blue</button>
+    <button id="b3" onclick="green()">Green</button>
+    <button id="b4" onclick="reset()">Reset</button>
+    <script>
+        let a=document.getElementById('b1')
+        let b=document.getElementById('b2')
+        let c=document.getElementById('b3')
+        let d=document.getElementById('b4')
+
+        function red(){
+            document.body.style.backgroundColor='red';
+            a.style.backgroundColor='red'
+             b.style.backgroundColor='white'
+            c.style.backgroundColor='white'
+        }
+        function blue(){
+            document.body.style.backgroundColor='blue';
+             b.style.backgroundColor='blue'
+              a.style.backgroundColor='white'
+               c.style.backgroundColor='white'
+        }
+        function green(){
+            document.body.style.backgroundColor='green';
+             c.style.backgroundColor='green'
+              a.style.backgroundColor='white'
+               b.style.backgroundColor='white'
+        }
+        function reset(){
+            document.body.style.backgroundColor='';
+             d.style.backgroundColor='white'
+              a.style.backgroundColor='white'
+               b.style.backgroundColor='white'
+                c.style.backgroundColor='white'
+             
+
+        }
+        
+    </script>
+</body>
+</html>
