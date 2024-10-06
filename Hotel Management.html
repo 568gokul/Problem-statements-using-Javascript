@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Reservation Manager</title>
+</head>
+<body>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background-color: forestgreen;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+h2 {
+  margin-top: 30px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+li span {
+  font-weight: bold;
+}
+
+.delete-btn {
+  background-color: darkred;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+</style>
+  <div class="container">
+    <h1>Restaurant Reservation Manager</h1>
+
+    <form id="reservation-form">
+      <label for="name">Customer Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="guests">Number of Guests:</label>
+      <input type="number" id="guests" min="1" required>
+
+      <label for="time">Reservation Time:</label>
+      <input type="time" id="time" required>
+
+      <button type="submit">Add Reservation</button>
+    </form>
+
+    <h2>Reservations</h2>
+    <ul id="reservation-list"></ul>
+  </div>
+  <script>
+    document.getElementById("reservation-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const guests = document.getElementById("guests").value;
+  const time = document.getElementById("time").value;
+
+  addReservation(name, guests, time);
+
+  // Reset form
+  document.getElementById("reservation-form").reset();
+});
+
+function addReservation(name, guests, time) {
+  const reservationList = document.getElementById("reservation-list");
+
+  const listItem = document.createElement("li");
+  listItem.innerHTML = `<span>Name:</span> ${name}, <span>Guests:</span> ${guests}, <span>Time:</span> ${time}`;
+
+  // Create delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "Delete";
+  deleteButton.classList.add("delete-btn");
+  deleteButton.addEventListener("click", function() {
+    reservationList.removeChild(listItem);
+  });
+
+  listItem.appendChild(deleteButton);
+  reservationList.appendChild(listItem);
+}
+
+  </script>
+</body>
+</html>
