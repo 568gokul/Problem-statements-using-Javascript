@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Enrollment Manager</title>
+</head>
+<body>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+li span {
+  font-weight: bold;
+}
+
+.enroll-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+}
+
+.enroll-btn:hover {
+  background-color: #218838;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  cursor: pointer;
+}
+
+    </style>
+  <div class="container">
+    <h1>Course Enrollment Manager</h1>
+
+    <!-- Course form -->
+    <form id="course-form">
+      <h2>Add New Course</h2>
+      <label for="course-name">Course Name:</label>
+      <input type="text" id="course-name" required>
+
+      <label for="course-code">Course Code:</label>
+      <input type="text" id="course-code" required>
+
+      <button type="submit">Add Course</button>
+    </form>
+
+    <h2>Courses</h2>
+    <ul id="course-list"></ul>
+  </div>
+
+  <!-- Enrollment Modal -->
+  <div id="enrollment-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Enroll Student</h2>
+      <label for="student-name">Student Name:</label>
+      <input type="text" id="student-name" required>
+
+      <button id="enroll-button">Enroll Student</button>
+    </div>
+  </div>
+  <script>
+    let selectedCourseElement = null;
+
+document.getElementById('course-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const courseName = document.getElementById('course-name').value;
+  const courseCode = document.getElementById('course-code').value;
+
+  addCourse(courseName, courseCode);
+
+  // Reset form
+  document.getElementById('course-form').reset();
+});
+
+function addCourse(courseName, courseCode) {
+  const courseList = document.getElementById('course-list');
+
+  const listItem = document.createElement('li');
+  listItem.innerHTML = `<span>Course:</span> ${courseName} (${courseCode})`;
+
+  const enrollButton = document.createElement('button');
+  enrollButton.innerText = 'Enroll Student';
+  enrollButton.classList.add('enroll-btn');
+  enrollButton.addEventListener('click', function() {
+    selectedCourseElement = listItem;
+    openEnrollmentModal();
+  });
+
+  // Add the button to the list item
+  listItem.appendChild(enrollButton);
+
+  // Create a container for enrolled students
+  const studentList = document.createElement('ul');
+  studentList.classList.add('student-list');
+  listItem.appendChild(studentList);
+
+  courseList.appendChild(listItem);
+}
+
+// Modal functionality
+const modal = document.getElementById('enrollment-modal');
+const closeModal = document.getElementsByClassName('close')[0];
+const enrollButton = document.getElementById('enroll-button');
+
+// Open modal
+function openEnrollmentModal() {
+  modal.style.display = 'block';
+}
+
+// Close modal
+closeModal.onclick = function() {
+  modal.style.display = 'none';
+};
+
+// Enroll student
+enrollButton.addEventListener('click', function() {
+  const studentName = document.getElementById('student-name').value;
+
+  if (selectedCourseElement && studentName) {
+    const studentList = selectedCourseElement.querySelector('.student-list');
+    const studentItem = document.createElement('li');
+    studentItem.innerText = studentName;
+    studentList.appendChild(studentItem);
+
+    // Close modal and reset student name input
+    modal.style.display = 'none';
+    document.getElementById('student-name').value = '';
+  }
+});
+
+// Close modal when clicking outside the modal content
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+};
+
+  </script>
+</body>
+</html>
